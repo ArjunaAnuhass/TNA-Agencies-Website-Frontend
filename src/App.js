@@ -6,16 +6,15 @@ import { lightTheme } from './Theme/LightTheme';
 import Home from './components/Home/Home';
 import AllAdvertisements from './components/Advertisements/AllAdvertisements';
 import AdvertisementDetails from './components/Advertisements/AdvertisementDetails';
+import Profile from './components/Profile/Profile';
+import { CustomerRouters } from './Routers/CustomerRouters';
 
 function App() {
   return (
 
     <ThemeProvider theme={lightTheme}>
       <CssBaseline/>
-      <Navbar/>
-      <Home/>
-      <AllAdvertisements/>
-      <AdvertisementDetails/>
+        <CustomerRouters/>
     </ThemeProvider>
       
 
