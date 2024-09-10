@@ -2,10 +2,14 @@ import { Avatar, Box, IconButton } from '@mui/material'
 import React, { useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
 import "./Navbar.css"
+import { Person } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 export const Navbar = () => {
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const navigate = useNavigate();
 
 
   return (
@@ -57,7 +61,10 @@ export const Navbar = () => {
         </div>
 
         <div className=''>
-          <Avatar sx={{bgcolor:"white"}}>A</Avatar>
+          {false?<Avatar sx={{bgcolor:"white"}}>A</Avatar>:
+          <IconButton onClick={()=>navigate("/account/login")}>
+            <Person/>
+          </IconButton>}
         </div>
 
       </div>
