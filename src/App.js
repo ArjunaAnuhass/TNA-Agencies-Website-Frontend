@@ -1,15 +1,24 @@
-import logo from './logo.svg';
+
 import './App.css';
-import { Navbar } from './components/Navbar/Navbar';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { lightTheme } from './Theme/LightTheme';
-import Home from './components/Home/Home';
-import AllAdvertisements from './components/Advertisements/AllAdvertisements';
-import AdvertisementDetails from './components/Advertisements/AdvertisementDetails';
-import Profile from './components/Profile/Profile';
 import { CustomerRouters } from './Routers/CustomerRouters';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from './components/State/Authentication/Action';
+import { store } from './components/State/store';
 
 function App() {
+  const dispatch = useDispatch();
+
+  const jwt = localStorage.getItem("jwt");
+  const {auth} = useSelector((store) => store)
+
+  useEffect(()=>{
+    dispatch(getUser(auth.jwt || jwt));
+  }, [auth.jwt])
+
+
   return (
 
     <ThemeProvider theme={lightTheme}>

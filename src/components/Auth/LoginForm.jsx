@@ -1,7 +1,9 @@
 import { Button, TextField, Typography } from '@mui/material'
 import { Field, Form, Formik } from 'formik'
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { loginUser } from '../State/Authentication/Action'
 
 
 const initialValues = {
@@ -11,9 +13,11 @@ const initialValues = {
 
 export const LoginForm = () => {
 
-  const handleSubmit = () =>{
-
+  const handleSubmit = (values) =>{
+    dispatch(loginUser({userData:values, navigate}))
   }
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   return (

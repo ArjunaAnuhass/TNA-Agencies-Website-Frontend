@@ -4,6 +4,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Divider, Drawer, useMediaQuery } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../State/Authentication/Action';
 
 const menu=[
     {title:"Favorites", icon:<FavoriteIcon/>},
@@ -16,7 +18,16 @@ export const ProfileNavigation = ({open, handleClose}) => {
 
     const navigate = useNavigate();
 
+    const dispatch = useDispatch();
+
     const handleNavigate = (item) => {
+
+        if(item.title==="Logout"){
+            dispatch(logout())
+            navigate("/")
+        }
+        else
+
         navigate(`/my-profile/${item.title.toLowerCase()}`)
     }
 
