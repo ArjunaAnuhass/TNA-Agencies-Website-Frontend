@@ -1,7 +1,9 @@
-import { Button, TextField, Typography } from '@mui/material'
+import { Alert, Button, Snackbar, TextField, Typography } from '@mui/material'
 import { Field, Form, Formik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { loginUser } from '../State/Authentication/Action'
 
 
 const initialValues = {
@@ -11,11 +13,31 @@ const initialValues = {
 
 export const LoginForm = () => {
 
-  const handleSubmit = () =>{
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
+  const handleSubmit = (values) =>{
+    dispatch(loginUser({userData:values, navigate}))
+    .then(() => {
+      setSnackbarMessage("Login successful!");
+      setSnackbarSeverity("success");
+      setOpenSnackbar(true);
+    })
+    .catch(error => {
+      setSnackbarMessage("Login failed. Please check your credentials.");
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true);
+    });
   }
 
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
   return (
     <div>
 
@@ -47,6 +69,12 @@ export const LoginForm = () => {
             register
           </Button>
         </Typography>
+
+        <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
 
     </div>
   )
