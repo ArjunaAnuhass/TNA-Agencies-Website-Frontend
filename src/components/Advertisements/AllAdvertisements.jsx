@@ -1,10 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AdvertisementCard from './AdvertisementCard'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllAdvertisement } from '../State/Advertisement/Action'
 
 
-const advertisement=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+const advertisements=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 
 const AllAdvertisements = () => {
+
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+  const {advertisement} = useSelector(store => store)
+
+  console.log("advertisement", advertisement);
+
+  useEffect(()=>{
+    dispatch(getAllAdvertisement(jwt))
+  }, [])
+
   return (
 
     
@@ -13,7 +26,7 @@ const AllAdvertisements = () => {
 
         <div className='flex flex-wrap items-center justify-around gap-5'>
             {
-                advertisement.map((item)=><AdvertisementCard/>)
+                advertisement.advertisements.map((item)=><AdvertisementCard item = {item}/>)
             }
         </div>
         <section>

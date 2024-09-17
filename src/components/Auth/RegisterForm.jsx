@@ -1,6 +1,6 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
+import { Alert, Button, FormControl, InputLabel, MenuItem, Select, Snackbar, TextField, Typography } from '@mui/material'
 import { Field, Form, Formik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { registerUser } from '../State/Authentication/Action'
@@ -15,14 +15,34 @@ const initialValues = {
 export const RegisterForm = () => {
 
   const dispatch=useDispatch();
+  const navigate = useNavigate();
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const handleSubmit = (values) => {
     dispatch(registerUser({userData:values, navigate}))
+      .then(() => {
+        // Assuming your registerUser action returns a promise
+        setSnackbarMessage("Registration successful");
+        setSnackbarSeverity("success");
+        setOpenSnackbar(true);
+      })
+      .catch(error => {
+        setSnackbarMessage("This email already used ti another account...Please check and Try Again!", error);
+        setSnackbarSeverity("error");
+        setOpenSnackbar(true);
+      });
     console.log("form values", values)
+  }
+
+    const handleSnackbarClose = () => {
+      setOpenSnackbar(false);
 
   }
 
-  const navigate = useNavigate();
+  
   return (
     <div>
 
@@ -71,8 +91,16 @@ export const RegisterForm = () => {
         </Button>
       </Typography>
 
+      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
 
 
     </div>
   )
 }
+
+
+export default RegisterForm

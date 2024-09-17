@@ -7,6 +7,10 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from './components/State/Authentication/Action';
 import { store } from './components/State/store';
+import AdvertisementDetails from './components/Advertisements/AdvertisementDetails';
+import Routers from './Routers/Routers';
+import { getAdvertisementByUserId } from './components/State/Advertisement/Action';
+import UpdateAdvertisement from './AdminComponents/Dashboard/UpdateAdvertisement';
 
 function App() {
   const dispatch = useDispatch();
@@ -18,12 +22,15 @@ function App() {
     dispatch(getUser(auth.jwt || jwt));
   }, [auth.jwt])
 
+  useEffect(()=> {
+    getAdvertisementByUserId(auth,jwt || jwt)
+  }, [auth.user])
 
   return (
 
     <ThemeProvider theme={lightTheme}>
       <CssBaseline/>
-        <CustomerRouters/>
+        <Routers/>
     </ThemeProvider>
       
 

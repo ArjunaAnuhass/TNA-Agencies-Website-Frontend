@@ -14,9 +14,13 @@ export const Navbar = () => {
       navigate("/my-profile")
     }
     else{
-      navigate("/admin")
+      navigate("/admin/advertisement")
     }
   }
+
+  // const handleNavClick=()=>{
+  //   navigate("/all-adds")
+  // }
 
   const {auth} = useSelector(store => store)
 
@@ -43,9 +47,8 @@ export const Navbar = () => {
 
         <div className="hidden md:flex space-x-10">
           <a href="/" className="text-white hover:text-gray-200">Home</a>
-          <a href="/about" className="text-white hover:text-gray-200">About</a>
-          <a href="/all-ads" className="text-white hover:text-gray-200">All Ads</a>
-          <a href="/estimate" className="text-white hover:text-gray-200">Estimate the Property</a>
+          <a href='/all-adds' className="text-white hover:text-gray-200">All Ads</a>
+          <a href="/estimate-price" className="text-white hover:text-gray-200">Estimate the Property</a>
         </div>
         <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)} className="text-white">
@@ -55,14 +58,14 @@ export const Navbar = () => {
           </button>
         </div>
       </div>
-      {isOpen && (
+      {/* {isOpen && (
         <div className="md:hidden flex flex-col space-y-2 p-4">
           <a href="/" className="text-white hover:text-gray-200">Home</a>
           <a href="/about" className="text-white hover:text-gray-200">About</a>
-          <a href="/all-ads" className="text-white hover:text-gray-200">All Ads</a>
+          <a  className="text-white hover:text-gray-200">All Ads</a>
           <a href="/estimate" className="text-white hover:text-gray-200">Estimate the Property</a>
         </div>
-      )}
+      )} */}
     </nav>
 
       <div className='flex items-center space-x-2 lg:space-x-10'>

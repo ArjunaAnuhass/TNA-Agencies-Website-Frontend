@@ -1,15 +1,20 @@
 import React from 'react'
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Divider, Drawer, useMediaQuery } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../State/Authentication/Action';
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import FeedbackIcon from '@mui/icons-material/Feedback';
+import InsertCommentIcon from '@mui/icons-material/InsertComment';
 
 const menu=[
     {title:"Favorites", icon:<FavoriteIcon/>},
-    {title:"Logout", icon:<LogoutIcon/>}
+    {title:"Post-Advertisement", icon:<PostAddIcon/>},
+    {title:"Add-Feedback", icon:<FeedbackIcon/>},
+    {title:"All-Feedback", icon:<InsertCommentIcon/>},
+    {title:"Logout", icon:<LogoutIcon/>},
 ]
 
 export const ProfileNavigation = ({open, handleClose}) => {

@@ -1,9 +1,26 @@
 import { Grid } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAdvertisementById } from '../State/Advertisement/Action';
 
 const AdvertisementDetails = () => {
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const jwt = localStorage.getItem("jwt");
+    const {auth, advertisement} = useSelector(store => store)
+
+    const {id, districtCategory} = useParams();
+
+    console.log("advertisement", advertisement);
+
+    useEffect(() => {
+        dispatch(getAdvertisementById({jwt, advertisementId:id}))
+    }, [])
+
   return (
     <div className='px-5 lg:px-20'>
 
@@ -13,7 +30,7 @@ const AdvertisementDetails = () => {
             <div>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <img className='w-full h-[40vh] object-cover' src="https://cdn.prod.website-files.com/620ec747459e13c7cf12a39e/625b10a58137b364b18df2ea_iStock-94179607.jpg" alt="" />
+                        <img className='w-full h-[40vh] object-cover' src={advertisement.advertisement.images?.[0]} alt="" />
                     </Grid>
                     <Grid item xs={12} lg={6}>
                         <img className='w-full h-[40vh] object-cover' src="https://ik.imagekit.io/livlabs/ik-seo/pma/assets/iStock-1315966358__1_/properties-in-campbell-ca.jpg?tr:w-auto,dpr-auto" alt="" />
@@ -25,67 +42,65 @@ const AdvertisementDetails = () => {
             </div>
 
             <div className='pt-3 pb-5'>
-                <h1 className='text-4xl font-semibold'>Advertisement Name</h1>
-                <h2 className='text-2xl font-extrabold mt-4'>LKR 42,000,000</h2>
+                <h1 className='text-4xl font-semibold'>{advertisement.advertisement.title}</h1>
+                <h2 className='text-2xl font-extrabold mt-4'>LKR {advertisement.advertisement.price}</h2>
                 <p className='text-gray-500 mt-1'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, sapiente numquam 
-                    dolor incidunt unde aut dicta cumque atque corporis, facilis, consequuntur adipisci eveniet quis 
-                    repudiandae iure culpa est? Beatae, esse?e
+                    {advertisement.advertisement.description}
                 </p>
 
                 <div className='space-y-3 mt-3'>
                     <p className='text-gray-500 flex items-center gap-3'>
                         <LocationOnIcon/>
                         <span>
-                            Colombo, Sri Lanka
+                            {advertisement.advertisement.address?.city}
                         </span>
                     </p>
                     <p className='text-gray-500 flex items-center gap-3'>
                         <CalendarTodayIcon/>
                         <span>
-                            Published Date: 2024-09-09 20.33 PM
+                            Published Date: {advertisement.advertisement.publishedDate}
                         </span>
                     </p>
-                    <p className='text-gray-500 flex items-center gap-3'>
+                    <p className='text-white flex items-center gap-3'>
                         
                         <span>
-                            Land Size: 1700 square feet
+                            Land Size: {advertisement.advertisement.landSize} square feet
                         </span>
                     </p>
-                    <p className='text-gray-500 flex items-center gap-3'>
+                    <p className='text-white flex items-center gap-3'>
                         
                         <span>
-                            House Size: 2000 square feet
+                            House Size: {advertisement.advertisement.houseSize} square feet
                         </span>
                     </p>
-                    <p className='text-gray-500 flex items-center gap-3'>
+                    <p className='text-white flex items-center gap-3'>
                         
                         <span>
-                            Baths: 2 baths
+                            Baths: {advertisement.advertisement.baths} baths
                         </span>
                     </p>
-                    <p className='text-gray-500 flex items-center gap-3'>
+                    <p className='text-white flex items-center gap-3'>
                         
                         <span>
-                            Beds: 4 baths
+                            Beds: {advertisement.advertisement.beds} baths
                         </span>
                     </p>
-                    <p className='text-gray-500 flex items-center gap-3'>
+                    <p className='text-white flex items-center gap-3'>
                         
                         <span>
-                            Baths: 2 baths
+                            Category by District: {advertisement.advertisement.districtCategory?.name}
                         </span>
                     </p>
-                    <p className='text-gray-500 flex items-center gap-3'>
+                    <p className='text-white flex items-center gap-3'>
                         
                         <span>
-                            Email: anuhass2017@gmail.com
+                            Email: {advertisement.advertisement.contactInformation?.email}
                         </span>
                     </p>
-                    <p className='text-gray-500 flex items-center gap-3'>
+                    <p className='text-white items-center gap-3'>
                         
                         <span>
-                            Mobile: 076-731-7368
+                            Mobile: {advertisement.advertisement.contactInformation?.mobile}
                         </span>
                     </p>
                 </div>

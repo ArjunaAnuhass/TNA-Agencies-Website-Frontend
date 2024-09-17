@@ -20,8 +20,10 @@ export const registerUser = (reqData) => async(dispatch) => {
        console.log("register success", reqData)
     }
     catch (error){
-        dispatch({type:REGISTER_FAILURE, payload:error})
-        console.log("error to register", error)
+        const errorMessage = error.response?.data || "Registration failed. Please try again.";
+        dispatch({type:REGISTER_FAILURE, payload:errorMessage})
+        // console.log("error to register", error)
+        throw new Error(errorMessage);
     }
 }
 
@@ -44,8 +46,13 @@ export const loginUser = (reqData) => {
             console.log("login success", data);
         }
         catch(error){
-            dispatch({type:LOGIN_FAILURE, payload:error})
-            console.log("error to login", error);
+            const errorMessage = error.response && error.response.data 
+                ? error.response.data 
+                : "Login failed. Please check your credentials.";
+            
+            dispatch({type:LOGIN_FAILURE, payload:errorMessage})
+            console.log("error to login", errorMessage);
+            throw new Error(errorMessage);
         }
     }
 }
