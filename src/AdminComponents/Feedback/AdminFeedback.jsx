@@ -2,6 +2,7 @@ import { Box, Button, Card, CardContent, CardHeader, Divider, Typography } from 
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteFeedback, getAllFeedbacks } from '../../components/State/Feedback/Action';
+import { toast } from 'react-toastify';
 
 const AdminFeedback = () => {
 
@@ -15,10 +16,18 @@ const AdminFeedback = () => {
         dispatch(getAllFeedbacks(token));
     }, [dispatch, token]);
 
-    // Delete a feedback by feedbackId
-    const handleDelete = (feedbackId) => {
-        dispatch(deleteFeedback(feedbackId, token));
-    };
+    const handleDelete = async (feedbackId) => {
+        await dispatch(deleteFeedback(feedbackId, token));
+    
+        toast.success(`Feedback ${feedbackId} ID Deleted Successfully...`)
+    
+        dispatch(getAllFeedbacks(token));
+    }
+
+    // const handleDelete = (feedbackId) => {
+    //     dispatch(deleteFeedback(feedbackId, token));
+    // };
+    
 
   return (
     

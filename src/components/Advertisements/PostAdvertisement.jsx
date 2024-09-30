@@ -1,11 +1,14 @@
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { Button, CircularProgress, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { useFormik } from 'formik'
-import React, { useState } from 'react'
+import { useFormik, yupToFormErrors } from 'formik'
+import React, { useEffect, useState } from 'react'
 import { uploadImageToCloudinary } from '../util/UploadToCloudinary';
 import { useDispatch } from 'react-redux';
 import { createAdvertisement } from '../State/Advertisement/Action';
+import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const initialValues={
     title:"",
@@ -22,19 +25,24 @@ const initialValues={
     email:"",
     mobile:"",
     images:[],
-    // districtCategory:""
 }
 
 export const PostAdvertisement = () => {
 
-    const {advertisement} = (store => store); 
+    const {advertisement} = (store => store);
+
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState(null);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const jwt = localStorage.getItem("jwt");
 
     const formik = useFormik({
         initialValues,
+        validationSchema: Yup.object({
+        }),
         onSubmit: (values, e) => {
             const data = {
                 title:values.title,
@@ -55,13 +63,27 @@ export const PostAdvertisement = () => {
                     mobile:values.mobile
                 },
                 images:values.images,
-                // districtCategory:values.districtCategory
             };
             console.log("data ---", data);
 
             dispatch(createAdvertisement({data, jwt}))
+                .then(() => {
+                    setSuccess(true);
+                })
+                .catch((error) => {
+                    setError(error);
+                })
         }
     });
+
+    useEffect(() => {
+        if (success) {
+            toast.success("Advertisement posted successfully!");
+            setTimeout(() => {
+                navigate("/all-adds"); // Navigate to another page
+            }, 2000);  // Redirect after 2 seconds
+        }
+    }, [success, navigate]);
 
 
     // const handleImageChange = async(e) => {
@@ -121,13 +143,16 @@ export const PostAdvertisement = () => {
                     </label>
 
                     <div className='flex flex-wrap gap-2'>
-                        {formik.values.images.map((image, index)=>
+                        {formik.values.images.map((image, index)=> (
                         <div className='relative'>
                             <img className='w-24 h-24 object-cover' key={index} src={image} alt=''/>
                             <IconButton size='small' sx={{position: 'absolute', top: 0, right: 0, outline: 'none'}} onClick={()=>handleRemoveImage(index)}>
                                 <CloseIcon sx={{fontSize:"1rem"}}/>
                             </IconButton>
-                        </div>)}
+                        </div>))}
+                        {formik.touched.images && formik.errors.images ? (
+        <div style={{ color: 'red' }}>{formik.errors.images}</div>
+    ) : null}
                     </div>
                 </Grid>
 
@@ -199,7 +224,7 @@ export const PostAdvertisement = () => {
                 </Grid> */}
             </Grid>
 
-            <Button className='mt-5' variant='contained' color='primary' type='submit'>Post Advertisement</Button>
+            <Button className='mt-5' variant='contained' color='primary' type='submit' disabled={formik.values.images.length < 3}>Post Advertisement</Button>
         </form>
         </div>
 

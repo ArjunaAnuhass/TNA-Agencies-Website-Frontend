@@ -1,12 +1,18 @@
 import { Alert, Box, Button, CircularProgress, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { addFeedback } from '../State/Feedback/Action';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const AddFeedback = () => {
 
-    const [feedbackData, setFeedbackData] = useState({ feedback: '' });
+  const [success, setSuccess] = useState(false);
+  const [err, setError] = useState(null);
+
+  const [feedbackData, setFeedbackData] = useState({ feedback: '' });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   const feedback = useSelector((state) => state.feedback);
   const { loading, error } = feedback;
@@ -16,9 +22,24 @@ const AddFeedback = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (feedbackData.feedback) {
-      dispatch(addFeedback({ data: feedbackData, jwt }));
+      dispatch(addFeedback({ data: feedbackData, jwt }))
+      .then(() => {
+        setSuccess(true);
+    })
+    .catch((err) => {
+        setError(err);
+    })
     }
   };
+
+  useEffect(() => {
+    if (success) {
+        toast.success("Feedback feed successfully!");
+        setTimeout(() => {
+            navigate("/"); // Navigate to another page
+        }, 2000);  // Redirect after 2 seconds
+    }
+}, [success, navigate]);
 
   return (
     

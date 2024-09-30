@@ -5,11 +5,11 @@ import { deleteAdvertisement, getAllAdvertisement, updateAdvertisementAvailabili
 import { Delete } from '@mui/icons-material';
 import UpdateIcon from '@mui/icons-material/Update';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-const allAds = [1,1,1,1,1,1,1];
 export default function AllAds () {
 
-  const disptach = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const {advertisement} = useSelector((store) => store);
@@ -17,19 +17,26 @@ export default function AllAds () {
   const jwt = localStorage.getItem("jwt");
 
   useEffect(() => {
-    disptach(getAllAdvertisement(jwt))
-  }, [disptach, jwt])
+    dispatch(getAllAdvertisement(jwt))
+  }, [dispatch, jwt])
 
   // disptach(updateAdvertisementAvailability({advertisementId:advertisement, jwt}));
 
-  const handleUpdateAvailability = (advertisementId, availability) => {
-    const newStatus = {availability: !availability};
-    disptach(updateAdvertisementAvailability(advertisementId, newStatus, jwt));
-  }
+  const handleUpdateAvailability = async (advertisementId, availability) => {
+    const newStatus = { availability: !availability };
+    await dispatch(updateAdvertisementAvailability(advertisementId, newStatus, jwt));
+    dispatch(getAllAdvertisement(jwt)); // Re-fetch advertisements after updating
+  };
+  
 
-  const handleDeleteAdvertisement = (advertisementId) => {
-    disptach(deleteAdvertisement(advertisementId, jwt));
-  }
+  const handleDeleteAdvertisement = async (advertisementId) => {
+    await dispatch(deleteAdvertisement(advertisementId, jwt));
+
+    toast.success(`Advertisement ${advertisementId} ID Deleted Successfully...`)
+
+    dispatch(getAllAdvertisement(jwt));
+  };
+  
 
   const handleUpdateAdvertisement = (advertisementId) =>{
     navigate(`/admin/advertisement/update-advertisement/${advertisementId}`);
