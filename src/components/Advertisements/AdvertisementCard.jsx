@@ -19,7 +19,7 @@ const AdvertisementCard = ({item}) => {
 
     const handleNavigateToRestaurant = () => {
         if(item.availability){
-            navigate(`/advertisements/${item.districtCategory.name}/${item.title}/${item.id}`)
+            navigate(`/advertisements/${item.title}/${item.id}`)
         }
     }
 
@@ -36,9 +36,9 @@ const AdvertisementCard = ({item}) => {
         <div className='p-4 textPart lg:flex w-full justify-between'>
             <div className='space-y-1'>
                 <p onClick={handleNavigateToRestaurant} className='font-semibold text-lg cursor-pointer'>{item.title}</p>
-                <p className='text-gray-500 text-sm'>
+                {/* <p className='text-gray-500 text-sm'>
                     {item.districtCategory?.name}
-                </p>
+                </p> */}
             </div>
 
             <div>

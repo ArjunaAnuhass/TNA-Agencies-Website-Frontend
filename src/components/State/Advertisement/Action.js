@@ -114,8 +114,8 @@ export const deleteAdvertisement = (advertisementId, jwt) => {
                     Authorization: `Bearer ${jwt}`,
                 },
             });
-            dispatch({type:DELETE_ADVERTISEMENT_SUCCESS, payload:response.data});
-            console.log("add deleted successfully", response.data);
+            dispatch({type:DELETE_ADVERTISEMENT_SUCCESS, payload:response});
+            console.log("add deleted successfully", response);
         }
         catch(error){
             dispatch({type:DELETE_ADVERTISEMENT_FAILURE, payload:error});

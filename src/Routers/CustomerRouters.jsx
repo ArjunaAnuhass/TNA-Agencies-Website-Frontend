@@ -15,7 +15,7 @@ export const CustomerRouters = () => {
         <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path='/account/:register' element={<Home/>}/>
-            <Route path='advertisements/:districtCategory/:title/:id' element={<AdvertisementDetails/>}/>
+            <Route path='advertisements/:title/:id' element={<AdvertisementDetails/>}/>
             <Route path='/my-profile/*' element={<Profile/>}/>
             <Route path='/all-adds' element={<AllAdvertisements/>}/>
             <Route path='/estimate-price' element={<EstimatePrice/>}/>

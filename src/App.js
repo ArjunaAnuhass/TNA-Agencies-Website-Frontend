@@ -1,16 +1,13 @@
-
 import './App.css';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { lightTheme } from './Theme/LightTheme';
-import { CustomerRouters } from './Routers/CustomerRouters';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from './components/State/Authentication/Action';
-import { store } from './components/State/store';
-import AdvertisementDetails from './components/Advertisements/AdvertisementDetails';
 import Routers from './Routers/Routers';
 import { getAdvertisementByUserId } from './components/State/Advertisement/Action';
-import UpdateAdvertisement from './AdminComponents/Dashboard/UpdateAdvertisement';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +28,15 @@ function App() {
     <ThemeProvider theme={lightTheme}>
       <CssBaseline/>
         <Routers/>
+        <ToastContainer position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={true}/>
     </ThemeProvider>
       
 

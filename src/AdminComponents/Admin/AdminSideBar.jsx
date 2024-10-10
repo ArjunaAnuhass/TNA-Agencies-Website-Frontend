@@ -11,8 +11,8 @@ import { logout } from '../../components/State/Authentication/Action';
 
 const menu = [
     {title:"Dashboard", icon:<Dashboard/>, path:"/"},
-    {title:"Category", icon:<CategoryIcon/>, path:"/category"},
-    {title:"Advertisement", icon:<NewspaperIcon/>, path:"/editAdvertisements"},
+    // {title:"Category", icon:<CategoryIcon/>, path:"/category"},
+    // {title:"Advertisement", icon:<NewspaperIcon/>, path:"/editAdvertisements"},
     {title:"Admin-Feedback", icon:<FeedbackIcon/>, path:"/admin-feedback"},
     {title:"Logout", icon:<LogoutIcon/>, path:"/"}
 

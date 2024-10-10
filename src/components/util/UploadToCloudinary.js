@@ -23,7 +23,7 @@ export const uploadImageToCloudinary = async(file)=> {
         if (!res.ok) {
             throw new Error('Failed to upload image');
         }
-        return fileData.api_url;
+        return fileData.secure_url || fileData.url;
         
     }
     catch(error){

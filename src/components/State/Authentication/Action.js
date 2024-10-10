@@ -37,7 +37,7 @@ export const loginUser = (reqData) => {
 
             if(data.jwt)localStorage.setItem("jwt", data.jwt);
             if(data.role==="ROLE_ADMIN"){
-                reqData.navigate("/admin")
+                reqData.navigate("/admin/advertisement/")
             }
             else{
                 reqData.navigate("/")
